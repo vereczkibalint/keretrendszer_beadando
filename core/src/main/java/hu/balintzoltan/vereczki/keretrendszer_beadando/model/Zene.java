@@ -1,14 +1,14 @@
-package model;
+package hu.balintzoltan.vereczki.keretrendszer_beadando.model;
 
-import exceptions.DateIsAfterTodayException;
-import exceptions.MusicLengthTooShortException;
-import exceptions.ValueTooShortException;
+import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.DateIsAfterTodayException;
+import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.MusicLengthTooShortException;
+import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.ValueTooShortException;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 public class Zene {
-    private UUID id;
+    private String id;
     private Eloado eloado;
     private String album;
     private String cim;
@@ -16,12 +16,12 @@ public class Zene {
     private Mufaj mufaj;
     private int hossz;
 
-    public UUID getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId() {
-        this.id = UUID.randomUUID();
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Eloado getEloado() {
@@ -84,13 +84,20 @@ public class Zene {
         this.hossz = hossz;
     }
 
-    public Zene(Eloado eloado, String album, String cim, LocalDate kiadas, Mufaj mufaj, int hossz)
-            throws ValueTooShortException, MusicLengthTooShortException, DateIsAfterTodayException {
-        this.setEloado(eloado);
-        this.setAlbum(album);
-        this.setCim(cim);
-        this.setKiadas(kiadas);
-        this.setMufaj(mufaj);
-        this.setHossz(hossz);
+    public Zene() {
+        this.id = UUID.randomUUID().toString();
+    }
+
+    @Override
+    public String toString() {
+        return "Zene{" +
+                "id='" + id + '\'' +
+                ", eloado=" + eloado +
+                ", album='" + album + '\'' +
+                ", cim='" + cim + '\'' +
+                ", kiadas=" + kiadas +
+                ", mufaj=" + mufaj +
+                ", hossz=" + hossz +
+                '}';
     }
 }

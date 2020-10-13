@@ -1,7 +1,7 @@
-package service;
+package hu.balintzoltan.vereczki.keretrendszer_beadando.service;
 
-import model.Eloado;
-import model.Mufaj;
+import hu.balintzoltan.vereczki.keretrendszer_beadando.model.Eloado;
+import hu.balintzoltan.vereczki.keretrendszer_beadando.model.Mufaj;
 
 import java.util.Collection;
 import java.util.UUID;

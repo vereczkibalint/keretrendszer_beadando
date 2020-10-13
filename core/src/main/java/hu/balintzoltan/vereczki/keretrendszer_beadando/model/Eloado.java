@@ -1,25 +1,26 @@
-package model;
+package hu.balintzoltan.vereczki.keretrendszer_beadando.model;
 
-import exceptions.DateIsAfterTodayException;
-import exceptions.ValueTooShortException;
+import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.DateIsAfterTodayException;
+import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.ValueTooShortException;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 public class Eloado {
-    private UUID id;
+    private String id;
     private String szuletesiNev;
     private String muveszNev;
     private LocalDate szuletesiDatum;
     private String allampolgarsag;
-    private List<Mufaj> mufajok;
+    private Mufaj mufaj;
 
-    public UUID getId() {
+    public String getId() {
         return this.id;
     }
-    public void setId() {
-        this.id = UUID.randomUUID();
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSzuletesiNev() {
@@ -63,29 +64,15 @@ public class Eloado {
         this.allampolgarsag = allampolgarsag;
     }
 
-    public List<Mufaj> getMufajok() {
-        return mufajok;
+    public Mufaj getMufaj() {
+        return mufaj;
     }
 
-    public void setMufajok(List<Mufaj> mufajok) {
-        this.mufajok = mufajok;
+    public void setMufaj(Mufaj mufaj) {
+        this.mufaj = mufaj;
     }
 
-    public Eloado(String szuletesiNev, String muveszNev, LocalDate szuletesiDatum, String allampolgarsag, List<Mufaj> mufajok)
-            throws ValueTooShortException, DateIsAfterTodayException {
-        this.setId();
-        this.setSzuletesiNev(szuletesiNev);
-        this.setMuveszNev(muveszNev);
-        this.setSzuletesiDatum(szuletesiDatum);
-        this.setAllampolgarsag(allampolgarsag);
-        this.setMufajok(mufajok);
-    }
-
-    public Eloado(String szuletesiNev, LocalDate szuletesiDatum, String allampolgarsag)
-            throws ValueTooShortException, DateIsAfterTodayException {
-        this.setId();
-        this.setSzuletesiNev(szuletesiNev);
-        this.setSzuletesiDatum(szuletesiDatum);
-        this.setAllampolgarsag(allampolgarsag);
+    public Eloado() {
+        this.id = UUID.randomUUID().toString();
     }
 }
