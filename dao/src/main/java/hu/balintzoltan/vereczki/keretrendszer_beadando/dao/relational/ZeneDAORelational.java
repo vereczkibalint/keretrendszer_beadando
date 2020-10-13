@@ -63,7 +63,23 @@ public class ZeneDAORelational implements ZeneDAO {
 
     @Override
     public void updateZene(Zene zene) {
-        
+        Session session = factory.openSession();
+        Transaction updateTransaction = session.beginTransaction();
+        Zene zeneToUpdate = session.get(Zene.class, zene.getId());
+        try {
+            zeneToUpdate.setEloado(zene.getEloado());
+            zeneToUpdate.setMufaj(zene.getMufaj());
+            zeneToUpdate.setKiadas(zene.getKiadas());
+            zeneToUpdate.setHossz(zene.getHossz());
+            zeneToUpdate.setCim(zene.getCim());
+            zeneToUpdate.setAlbum(zene.getAlbum());
+            session.update(zeneToUpdate);
+            updateTransaction.commit();
+        } catch (ValueTooShortException | DateIsAfterTodayException | MusicLengthTooShortException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            session.close();
+        }
     }
 
     @Override

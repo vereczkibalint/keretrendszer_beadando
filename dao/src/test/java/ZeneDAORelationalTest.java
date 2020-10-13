@@ -59,7 +59,14 @@ public class ZeneDAORelationalTest {
 
     @Test
     public void testZeneUpdate() {
+        Zene oldZene = dao.getZeneById("86a9628d-b56b-4ce2-98d4-25d94d3cc19f");
+        Zene updatedZene = oldZene;
 
+        oldZene.setMufaj(Mufaj.HIPHOP);
+
+        dao.updateZene(updatedZene);
+
+        System.out.println(dao.getZeneById("86a9628d-b56b-4ce2-98d4-25d94d3cc19f"));
     }
 
     @Test
