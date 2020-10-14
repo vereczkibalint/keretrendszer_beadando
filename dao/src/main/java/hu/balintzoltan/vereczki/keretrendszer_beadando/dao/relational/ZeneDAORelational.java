@@ -4,6 +4,7 @@ package hu.balintzoltan.vereczki.keretrendszer_beadando.dao.relational;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.dao.ZeneDAO;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.DateIsAfterTodayException;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.MusicLengthTooShortException;
+import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.NoMatchingId;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.ValueTooShortException;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.model.Mufaj;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.model.Zene;
@@ -13,6 +14,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -35,9 +37,12 @@ public class ZeneDAORelational implements ZeneDAO {
     }
 
     @Override
-    public Zene getZeneById(String id) {
+    public Zene getZeneById(String id) throws NoMatchingId {
         Session session = factory.openSession();
         Zene result = session.get(Zene.class, id);
+        if(result == null) {
+            throw new NoMatchingId(MessageFormat.format("Nem található zene a(z) {0} azonosítóval!", id));
+        }
         session.close();
         return result;
     }
@@ -62,10 +67,13 @@ public class ZeneDAORelational implements ZeneDAO {
     }
 
     @Override
-    public void updateZene(Zene zene) {
+    public void updateZene(Zene zene) throws NoMatchingId {
         Session session = factory.openSession();
         Transaction updateTransaction = session.beginTransaction();
         Zene zeneToUpdate = session.get(Zene.class, zene.getId());
+        if(zeneToUpdate == null) {
+            throw new NoMatchingId(MessageFormat.format("Nem található zene a(z) {0} azonosítóval!", zene.getId()));
+        }
         try {
             zeneToUpdate.setEloado(zene.getEloado());
             zeneToUpdate.setMufaj(zene.getMufaj());
@@ -83,10 +91,14 @@ public class ZeneDAORelational implements ZeneDAO {
     }
 
     @Override
-    public void removeZene(Zene zene) {
+    public void removeZene(Zene zene) throws NoMatchingId {
         Session session = factory.openSession();
         Transaction deleteTransaction = session.beginTransaction();
-        session.delete(zene);
+        Zene zeneToDelete = session.get(Zene.class, zene.getId());
+        if(zeneToDelete == null) {
+            throw new NoMatchingId(MessageFormat.format("Nem található zene a(z) {0} azonosítóval!", zene.getId()));
+        }
+        session.delete(zeneToDelete);
         deleteTransaction.commit();
         session.close();
     }
