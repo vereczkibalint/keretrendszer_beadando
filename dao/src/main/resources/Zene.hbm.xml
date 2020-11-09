@@ -1,9 +1,7 @@
 <hibernate-mapping xmlns="http://www.hibernate.org/xsd/hibernate-mapping">
     <class name="hu.balintzoltan.vereczki.keretrendszer_beadando.model.Zene" table="zenek">
         <id name="id" type="string" column="id" />
-        <many-to-one name="eloado" class="hu.balintzoltan.vereczki.keretrendszer_beadando.model.Eloado" fetch="select">
-            <column name="eloado_id" not-null="false" />
-        </many-to-one>
+        <property name="eloado" column="eloado" type="string" />
         <property name="album" column="album" type="string" />
         <property name="cim" column="cim" type="string" />
         <property name="kiadas" column="kiadas" type="LocalDate" />
@@ -14,19 +12,5 @@
             </type>
         </property>
         <property name="hossz" column="hossz" type="int" />
-    </class>
-
-    <class name="hu.balintzoltan.vereczki.keretrendszer_beadando.model.Eloado" table="eloadok">
-        <id name="id" type="string" column="id" />
-        <property name="szuletesiNev" column="szuletesi_nev" type="string" />
-        <property name="muveszNev" column="muvesz_nev" type="string" />
-        <property name="szuletesiDatum" column="szuletesi_datum" type="LocalDate" />
-        <property name="allampolgarsag" column="allampolgarsag" type="string" />
-        <property name="mufaj" column="mufaj">
-            <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">hu.balintzoltan.vereczki.keretrendszer_beadando.model.Mufaj</param>
-                <param name="useNamed">true</param>
-            </type>
-        </property>
     </class>
 </hibernate-mapping>

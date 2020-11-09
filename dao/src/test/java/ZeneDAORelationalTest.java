@@ -2,8 +2,8 @@ import hu.balintzoltan.vereczki.keretrendszer_beadando.dao.ZeneDAO;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.dao.relational.ZeneDAORelational;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.DateIsAfterTodayException;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.MusicLengthTooShortException;
+import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.NoMatchingId;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.exceptions.ValueTooShortException;
-import hu.balintzoltan.vereczki.keretrendszer_beadando.model.Eloado;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.model.Mufaj;
 import hu.balintzoltan.vereczki.keretrendszer_beadando.model.Zene;
 
@@ -12,8 +12,6 @@ import org.junit.Test;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
 
 public class ZeneDAORelationalTest {
 
@@ -31,6 +29,7 @@ public class ZeneDAORelationalTest {
             zene.setAlbum("album1");
             zene.setCim("cim1");
             zene.setKiadas(LocalDate.now().minusYears(1));
+            zene.setEloado("Avicii");
             zene.setHossz(120);
             zene.setMufaj(Mufaj.ELEKTRONIKUS);
 
@@ -43,8 +42,8 @@ public class ZeneDAORelationalTest {
     }
 
     @Test
-    public void testGetZeneById() {
-        System.out.println(dao.getZeneById("ea1a9069-b630-4119-b5ed-02584047ac35"));
+    public void testGetZeneById() throws NoMatchingId {
+        System.out.println(dao.getZeneById("00c291c2-f918-40c6-8c71-fb5a071c7415"));
     }
 
     @Test
@@ -54,25 +53,25 @@ public class ZeneDAORelationalTest {
 
     @Test
     public void testGetZeneByMufaj() {
-        System.out.println(dao.getZeneByMufaj(Mufaj.POP));
+        System.out.println(dao.getZeneByMufaj(Mufaj.ELEKTRONIKUS));
     }
 
     @Test
-    public void testZeneUpdate() {
-        Zene oldZene = dao.getZeneById("86a9628d-b56b-4ce2-98d4-25d94d3cc19f");
+    public void testZeneUpdate() throws NoMatchingId {
+        Zene oldZene = dao.getZeneById("00c291c2-f918-40c6-8c71-fb5a071c7415");
         Zene updatedZene = oldZene;
 
         oldZene.setMufaj(Mufaj.HIPHOP);
 
         dao.updateZene(updatedZene);
 
-        System.out.println(dao.getZeneById("86a9628d-b56b-4ce2-98d4-25d94d3cc19f"));
+        System.out.println(dao.getZeneById("00c291c2-f918-40c6-8c71-fb5a071c7415"));
     }
 
     @Test
-    public void testZeneDelete() {
+    public void testZeneDelete() throws NoMatchingId {
         System.out.println(dao.getAllZene());
-        dao.removeZene(dao.getZeneById("ea1a9069-b630-4119-b5ed-02584047ac35"));
+        dao.removeZene(dao.getZeneById("00c291c2-f918-40c6-8c71-fb5a071c7415"));
         System.out.println(dao.getAllZene());
     }
 }

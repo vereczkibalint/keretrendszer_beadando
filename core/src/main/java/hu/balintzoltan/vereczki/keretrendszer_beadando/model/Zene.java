@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class Zene {
     private String id;
-    private Eloado eloado;
+    private String eloado;
     private String album;
     private String cim;
     private LocalDate kiadas;
@@ -24,11 +24,11 @@ public class Zene {
         this.id = id;
     }
 
-    public Eloado getEloado() {
+    public String getEloado() {
         return eloado;
     }
 
-    public void setEloado(Eloado eloado) {
+    public void setEloado(String eloado) {
         this.eloado = eloado;
     }
 
